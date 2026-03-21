@@ -63,9 +63,19 @@ function App() {
       </div>
 
       {/* Right Panel – also lazy if you want, but for now keep as-is or add later */}
-      <AnimatePresence>
-        {selectedStock && <StockPanel />}
-      </AnimatePresence>
+<AnimatePresence mode="wait">
+  {activeView === 'dashboard' && (
+    <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading...</div>}>
+      <Dashboard key="dash" />
+    </Suspense>
+  )}
+  {activeView === 'watchlist' && (
+    <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading...</div>}>
+      <Watchlist key="wl" />
+    </Suspense>
+  )}
+  {/* repeat for alerts and settings */}
+</AnimatePresence>
 
       {/* Floating AI Orb */}
       <motion.button
