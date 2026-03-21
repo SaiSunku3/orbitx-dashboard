@@ -101,7 +101,7 @@ export default function Dashboard() {
         <h3 className="text-lg font-medium mb-4">Recent Activity</h3>
         <ul className="space-y-3 text-sm text-gray-300">
           <li>• TSLA dipped 3.2% — added note: "Waiting for earnings"</li>
-          <li>• AAPL +1.8% — alert triggered for > $220</li>
+          <li>• AAPL +1.8% — alert triggered for {' > '} $220</li>
           <li>• Priya added NVDA to watchlist</li>
         </ul>
       </div>
