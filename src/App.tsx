@@ -11,6 +11,14 @@ import StockPanel from './components/StockPanel'
 import AIInsights from './components/AIInsights'
 import VoiceListener from './components/VoiceListener'
 import Marquee from './components/Marquee'
+import { lazy, Suspense } from 'react'
+
+// ...
+
+const Dashboard = lazy(() => import('./Pages/Dashboard'))
+const Watchlist = lazy(() => import('./Pages/Watchlist'))
+const Alerts   = lazy(() => import('./Pages/Alerts'))
+const Settings = lazy(() => import('./Pages/Settings'))
 
 function App() {
   const { currentUser, activeView, selectedStock } = useStore()
@@ -45,9 +53,14 @@ function App() {
       </div>
 
       {/* Right Panel */}
-      <AnimatePresence>
-        {selectedStock && <StockPanel />}
-      </AnimatePresence>
+<AnimatePresence mode="wait">
+  {activeView === 'dashboard' && (
+    <Suspense fallback={<div className="flex-1 flex items-center justify-center">Loading...</div>}>
+      <Dashboard key="dash" />
+    </Suspense>
+  )}
+  {/* same for others */}
+</AnimatePresence>
 
       {/* Floating AI Orb */}
       <motion.button
