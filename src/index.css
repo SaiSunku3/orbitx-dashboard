@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Your custom styles, e.g.: */
 body {
-  background: #0a0a0a;
-  color: white;
-  font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+  background: #000;
 }
