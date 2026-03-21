@@ -3,16 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useStore } from './stores/useStore'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
-import StockPanel from './components/StockPanel'
 import AIInsights from './components/AIInsights'
 import VoiceListener from './components/VoiceListener'
 import Marquee from './components/Marquee'
 
-// Lazy-load the main views (remove any old static imports for these!)
-const Dashboard  = lazy(() => import('./Pages/Dashboard'))
-const Watchlist  = lazy(() => import('./Pages/Watchlist'))
-const Alerts     = lazy(() => import('./Pages/Alerts'))
-const Settings   = lazy(() => import('./Pages/Settings'))
+// Lazy-loaded views
+const Dashboard   = lazy(() => import('./Pages/Dashboard'))
+const Watchlist   = lazy(() => import('./Pages/Watchlist'))
+const Alerts      = lazy(() => import('./Pages/Alerts'))
+const Settings    = lazy(() => import('./Pages/Settings'))
+const StockPanel  = lazy(() => import('./components/StockPanel'))
 
 function App() {
   const { currentUser, activeView, selectedStock } = useStore()
@@ -62,20 +62,14 @@ function App() {
         </div>
       </div>
 
-      {/* Right Panel – also lazy if you want, but for now keep as-is or add later */}
-<AnimatePresence mode="wait">
-  {activeView === 'dashboard' && (
-    <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading...</div>}>
-      <Dashboard key="dash" />
-    </Suspense>
-  )}
-  {activeView === 'watchlist' && (
-    <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading...</div>}>
-      <Watchlist key="wl" />
-    </Suspense>
-  )}
-  {/* repeat for alerts and settings */}
-</AnimatePresence>
+      {/* Right Panel – lazy loaded */}
+      <AnimatePresence>
+        {selectedStock && (
+          <Suspense fallback={null}>
+            <StockPanel />
+          </Suspense>
+        )}
+      </AnimatePresence>
 
       {/* Floating AI Orb */}
       <motion.button
