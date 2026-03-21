@@ -1,16 +1,12 @@
-// Remove the named import line
-// import { Home, List, Bell, Settings as SettingsIcon, Globe } from 'lucide-react';  ← DELETE THIS
+// DELETE these lines (if present):
+// import Home from 'lucide-react/icons/home';
+// import List from 'lucide-react/icons/list';
+// import Bell from 'lucide-react/icons/bell';
+// import Settings from 'lucide-react/icons/settings';
+// import Globe from 'lucide-react/icons/globe';
 
-// Add individual imports instead
-import Home from 'lucide-react/icons/home';
-import List from 'lucide-react/icons/list';
-import Bell from 'lucide-react/icons/bell';
-import Settings from 'lucide-react/icons/settings';  // note: no "as SettingsIcon" needed, just rename if you want
-import Globe from 'lucide-react/icons/globe';
-import SettingsIcon from 'lucide-react/icons/settings';
-// If you renamed Settings → use <Settings /> or alias it: import SettingsIcon from 'lucide-react/icons/settings';
-
-// Then use them as <Home />, <List />, etc. (same as before)
+// ADD / REPLACE with this single line:
+import { Home, List, Bell, Settings, Globe } from 'lucide-react';
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: Home },
