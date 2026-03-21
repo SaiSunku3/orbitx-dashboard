@@ -12,8 +12,11 @@ export default defineConfig({
         '@emailjs/browser',
         'zustand',          // from previous issues
         'lucide-react',     // from previous issues
+        'recharts',
+        'framer-motion'   // often helps too
         // add more if future logs complain (e.g. 'framer-motion', 'recharts')
       ]
     }
   }
 })
+
