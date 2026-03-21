@@ -59,7 +59,22 @@ function App() {
       <AIInsights isOpen={showAI} onClose={() => setShowAI(false)} />
       <VoiceListener />
     </div>
+// ... existing imports ...
+import Marquee from './components/Marquee'
+
+// Inside return:
+<div className="flex h-screen overflow-hidden bg-[#0a0a0a] text-white relative">
+  <div id="noise" />
+  <Marquee />  {/* ← Add this */}
+
+  {/* Sidebar */}
+  <Sidebar />
+
+  {/* ... rest remains the same ... */}
+</div>
+    
   )
 }
+
 
 export default App
