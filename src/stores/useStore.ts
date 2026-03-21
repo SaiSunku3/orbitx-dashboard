@@ -71,7 +71,7 @@ export const useStore = create(
 
         for (const sym of symbols) {
           try {
-            const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${sym}&token=YOUR_FINNHUB_KEY_HERE`)
+            const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${sym}&token=d6qcnm1r01qhcrmjn9igd6qcnm1r01qhcrmjn9j0`)
             const data = await res.json()
             if (data.c) {
               newPrices[sym] = {
