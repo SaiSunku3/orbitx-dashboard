@@ -1,7 +1,10 @@
-import { motion } from 'framer-motion'
-import { Mic, RefreshCw, Globe } from 'lucide-react/icons' // or your working import style
-import { useStore } from '../stores/useStore'
-import { useState } from 'react'
+// DELETE individual imports:
+// import Mic from 'lucide-react/icons/mic';
+// import RefreshCw from 'lucide-react/icons/refresh-cw';
+// import Globe from 'lucide-react/icons/globe';
+
+// ADD / REPLACE with:
+import { Mic, RefreshCw, Globe } from 'lucide-react';
 
 interface TopbarProps {
   onAskAI: () => void
