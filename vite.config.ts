@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: '/',  // already there? good
   plugins: [react(), tailwindcss()],
