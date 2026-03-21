@@ -3,16 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useStore } from './stores/useStore'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
+import StockPanel from './components/StockPanel'   // keep static for now, or make lazy later
 import AIInsights from './components/AIInsights'
 import VoiceListener from './components/VoiceListener'
 import Marquee from './components/Marquee'
 
-// Lazy-loaded views – NO static imports for these!
+// Lazy-loaded page components – NO static imports for these four
 const Dashboard   = lazy(() => import('./Pages/Dashboard'))
 const Watchlist   = lazy(() => import('./Pages/Watchlist'))
 const Alerts      = lazy(() => import('./Pages/Alerts'))
 const Settings    = lazy(() => import('./Pages/Settings'))
-const LazyStockPanel = lazy(() => import('./components/StockPanel'))
 
 function App() {
   const { currentUser, activeView, selectedStock } = useStore()
@@ -62,13 +62,9 @@ function App() {
         </div>
       </div>
 
-      {/* Right Panel – lazy loaded */}
+      {/* Right Panel */}
       <AnimatePresence>
-        {selectedStock && (
-          <Suspense fallback={null}>
-            <LazyStockPanel />
-          </Suspense>
-        )}
+        {selectedStock && <StockPanel />}
       </AnimatePresence>
 
       {/* Floating AI Orb */}
