@@ -10,6 +10,8 @@ import Settings from './pages/Settings'
 import StockPanel from './components/StockPanel'
 import AIInsights from './components/AIInsights'
 import VoiceListener from './components/VoiceListener'
+// ... existing imports ...
+import Marquee from './components/Marquee'
 
 function App() {
   const { currentUser, activeView, selectedStock } = useStore()
@@ -59,8 +61,7 @@ function App() {
       <AIInsights isOpen={showAI} onClose={() => setShowAI(false)} />
       <VoiceListener />
     </div>
-// ... existing imports ...
-import Marquee from './components/Marquee'
+
 
 // Inside return:
 <div className="flex h-screen overflow-hidden bg-[#0a0a0a] text-white relative">
