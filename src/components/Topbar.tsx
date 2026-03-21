@@ -1,10 +1,7 @@
-// DELETE individual imports:
-// import Mic from 'lucide-react/icons/mic';
-// import RefreshCw from 'lucide-react/icons/refresh-cw';
-// import Globe from 'lucide-react/icons/globe';
-
-// ADD / REPLACE with:
-import { Mic, RefreshCw, Globe } from 'lucide-react';
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { useStore } from '../stores/useStore'
+import { Mic, RefreshCw, Globe } from 'lucide-react'
 
 interface TopbarProps {
   onAskAI: () => void
@@ -67,9 +64,6 @@ export default function Topbar({ onAskAI }: TopbarProps) {
 
         <Globe size={20} className="text-gray-400" />
       </div>
-
-      {/* Pass listening state to VoiceListener */}
-      <VoiceListener listening={listening} />
     </motion.header>
   )
 }
