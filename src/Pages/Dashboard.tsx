@@ -106,7 +106,7 @@ export default function Dashboard() {
     <li>• Priya added NVDA to watchlist</li>
   </ul>
 </div>
-      </div>
+     
     </motion.div>
   )
 }
