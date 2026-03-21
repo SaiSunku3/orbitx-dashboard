@@ -3,18 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useStore } from './stores/useStore'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
-import StockPanel from './components/StockPanel'
 import AIInsights from './components/AIInsights'
 import VoiceListener from './components/VoiceListener'
 import Marquee from './components/Marquee'
 
-// Lazy-loaded route components (NO static imports for these!)
-const Dashboard  = lazy(() => import('./Pages/Dashboard'))
-const Watchlist  = lazy(() => import('./Pages/Watchlist'))
-const Alerts     = lazy(() => import('./Pages/Alerts'))
-const Settings   = lazy(() => import('./Pages/Settings'))
-
-// Optional: lazy-load the sidebar panel too (small extra optimization)
+// Lazy-loaded views – NO static imports for these!
+const Dashboard   = lazy(() => import('./Pages/Dashboard'))
+const Watchlist   = lazy(() => import('./Pages/Watchlist'))
+const Alerts      = lazy(() => import('./Pages/Alerts'))
+const Settings    = lazy(() => import('./Pages/Settings'))
 const LazyStockPanel = lazy(() => import('./components/StockPanel'))
 
 function App() {
@@ -42,22 +39,22 @@ function App() {
         <div className="flex-1 overflow-auto p-6 relative">
           <AnimatePresence mode="wait">
             {activeView === 'dashboard' && (
-              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading dashboard...</div>}>
+              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading...</div>}>
                 <Dashboard key="dash" />
               </Suspense>
             )}
             {activeView === 'watchlist' && (
-              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading watchlist...</div>}>
+              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading...</div>}>
                 <Watchlist key="wl" />
               </Suspense>
             )}
             {activeView === 'alerts' && (
-              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading alerts...</div>}>
+              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading...</div>}>
                 <Alerts key="alerts" />
               </Suspense>
             )}
             {activeView === 'settings' && (
-              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading settings...</div>}>
+              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading...</div>}>
                 <Settings key="settings" />
               </Suspense>
             )}
@@ -65,7 +62,7 @@ function App() {
         </div>
       </div>
 
-      {/* Right Panel */}
+      {/* Right Panel – lazy loaded */}
       <AnimatePresence>
         {selectedStock && (
           <Suspense fallback={null}>
