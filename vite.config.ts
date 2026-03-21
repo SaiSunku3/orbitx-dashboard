@@ -4,19 +4,17 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: { port: 5173 }, // optional
 
+  // This helps Vercel / Rollup with client-only libraries
   build: {
     rollupOptions: {
       external: [
         '@emailjs/browser',
-        'zustand',          // from previous issues
-        'lucide-react',     // from previous issues
+        'zustand',
+        'lucide-react',
         'recharts',
-        'framer-motion'   // often helps too
-        // add more if future logs complain (e.g. 'framer-motion', 'recharts')
+        'framer-motion'
       ]
     }
   }
 })
-
