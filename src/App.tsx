@@ -10,7 +10,6 @@ import Settings from './pages/Settings'
 import StockPanel from './components/StockPanel'
 import AIInsights from './components/AIInsights'
 import VoiceListener from './components/VoiceListener'
-// ... existing imports ...
 import Marquee from './components/Marquee'
 
 function App() {
@@ -24,8 +23,9 @@ function App() {
   }, [])
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#0a0a0a] text-white">
+    <div className="flex h-screen overflow-hidden bg-[#0a0a0a] text-white relative">
       <div id="noise" />
+      <Marquee />
 
       {/* Sidebar */}
       <Sidebar />
@@ -61,21 +61,7 @@ function App() {
       <AIInsights isOpen={showAI} onClose={() => setShowAI(false)} />
       <VoiceListener />
     </div>
-
-
-// Inside return:
-<div className="flex h-screen overflow-hidden bg-[#0a0a0a] text-white relative">
-  <div id="noise" />
-  <Marquee />  {/* ← Add this */}
-
-  {/* Sidebar */}
-  <Sidebar />
-
-  {/* ... rest remains the same ... */}
-</div>
-    
   )
 }
-
 
 export default App
