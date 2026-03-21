@@ -1,11 +1,8 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-
 export default defineConfig({
-  base: '/',  // ← Add this line
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
+  base: '/',  // already there? good
+  plugins: [react(), tailwindcss()],
+  build: {
+    assetsDir: 'assets',  // default, but explicit
+    sourcemap: true  // helps debugging
+  }
 })
