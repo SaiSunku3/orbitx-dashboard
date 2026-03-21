@@ -37,28 +37,7 @@ function App() {
         <Topbar onAskAI={() => setShowAI(true)} />
 
         <div className="flex-1 overflow-auto p-6 relative">
-          <AnimatePresence mode="wait">
-            {activeView === 'dashboard' && (
-              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading dashboard...</div>}>
-                <Dashboard key="dash" />
-              </Suspense>
-            )}
-            {activeView === 'watchlist' && (
-              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading watchlist...</div>}>
-                <Watchlist key="wl" />
-              </Suspense>
-            )}
-            {activeView === 'alerts' && (
-              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading alerts...</div>}>
-                <Alerts key="alerts" />
-              </Suspense>
-            )}
-            {activeView === 'settings' && (
-              <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-400">Loading settings...</div>}>
-                <Settings key="settings" />
-              </Suspense>
-            )}
-          </AnimatePresence>
+          
         </div>
       </div>
 
