@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useStore } from '../stores/useStore'
-import { TrendingUp, TrendingDown } from 'lucide-react/icons'   // or your working import style
+import { TrendingUp, TrendingDown } from 'lucide-react'
 
 const tabItems = [
   'Top 10 Revenue',
@@ -10,7 +10,7 @@ const tabItems = [
 ]
 
 export default function Dashboard() {
-  const { prices, currentUser, addToWatchlist } = useStore()
+  const { prices, currentUser } = useStore()
 
   const majorIndices = [
     { name: 'NIFTY 50', key: '^NSEI' },
@@ -30,7 +30,6 @@ export default function Dashboard() {
       exit={{ opacity: 0, y: -20 }}
       className="space-y-10 pt-16"
     >
-      {/* Hero Indices Row – now clickable! */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
         {majorIndices.map(idx => {
           const data = prices[idx.key]
@@ -42,7 +41,7 @@ export default function Dashboard() {
               key={idx.key}
               whileHover={{ scale: 1.04, y: -4 }}
               className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-4 cursor-pointer"
-              onClick={() => useStore.getState().setSelectedStock(data)}   // ← fixed here
+              onClick={() => useStore.getState().setSelectedStock(data)}
             >
               <p className="text-sm text-gray-400">{idx.name}</p>
               <p className="text-2xl font-bold mt-1">
@@ -57,7 +56,6 @@ export default function Dashboard() {
         })}
       </div>
 
-      {/* Tabs placeholder */}
       <div className="flex gap-3 overflow-x-auto pb-4">
         {tabItems.map(tab => (
           <button
@@ -69,7 +67,6 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* User's Watchlist Card */}
       <div className="bg-gradient-to-br from-cyan-950/30 to-purple-950/30 border border-cyan-500/20 rounded-3xl p-6">
         <h2 className="text-xl font-semibold mb-4">{currentUser().name}'s Watchlist Pulse</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -89,7 +86,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Recent Activity */}
       <div className="bg-white/5 rounded-3xl p-6">
         <h3 className="text-lg font-medium mb-4">Recent Activity</h3>
         <ul className="space-y-3 text-sm text-gray-300">
