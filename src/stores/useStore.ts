@@ -65,17 +65,22 @@ export const useStore = create(
         set({ prices: newPrices })
       },
 
-      sendAlertEmail: async (symbol: string, message: string) => {
-        const user = get().currentUser()
-        if (!user.email) return
-
-        await emailjs.send(
-          'YOUR_SERVICE_ID',
-          'YOUR_TEMPLATE_ID',
-          { to_email: user.email, symbol, message },
-          'YOUR_PUBLIC_KEY'
-        )
-      }
+     sendAlertEmail: async (symbol: string, message: string) => {
+  try {
+    await emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      {
+        to_email: currentUser().email,
+        symbol,
+        message
+      },
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    );
+  } catch (err) {
+    console.error('EmailJS failed:', err);
+  }
+}
     }),
     { name: 'orbitx-storage' }
   )
