@@ -9,6 +9,15 @@ import Globe from 'lucide-react/icons/globe';
 
 // Then use them as <Home />, <List />, etc. (same as before)
 
+// In Topbar.tsx
+const [listening, setListening] = useState(false);
+
+// In the mic button onClick:
+onClick={() => setListening(!listening)}
+
+// Then pass listening to VoiceListener as prop
+<VoiceListener listening={listening} />
+  
 interface TopbarProps {
   onAskAI: () => void
 }
