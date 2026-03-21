@@ -23,7 +23,7 @@ export default function Dashboard() {
     { name: 'BTC', key: 'BINANCE:BTCUSDT' },
     { name: 'ETH', key: 'BINANCE:ETHUSDT' },
   ]
-
+onClick={() => useStore.getState().setSelectedStock(prices[idx.key])}
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
