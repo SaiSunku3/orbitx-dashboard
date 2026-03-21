@@ -1,6 +1,15 @@
 import { motion } from 'framer-motion'
 import { useStore } from '../stores/useStore'
 import { Home, List, Bell, Settings as SettingsIcon, Globe } from 'lucide-react'
+import Home from 'lucide-react/icons/home'
+import List from 'lucide-react/icons/list'
+import Bell from 'lucide-react/icons/bell'
+import SettingsIcon from 'lucide-react/icons/settings'
+import Globe from 'lucide-react/icons/globe'
+import Mic from 'lucide-react/icons/mic'
+import RefreshCw from 'lucide-react/icons/refresh-cw'
+
+// Then use them as <Home />, <List />, etc. (same as before)
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: Home },
