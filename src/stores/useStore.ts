@@ -34,7 +34,7 @@ export const useStore = create(
       switchUser: (id: string) => set({ currentUserId: id, selectedStock: null }),
 
       setView: (view: string) => set({ activeView: view }),
-
+setSelectedStock: (stock: Stock | null) => set({ selectedStock: stock }),
       addToWatchlist: (symbol: string) => {
         const uid = get().currentUserId
         set(state => ({
