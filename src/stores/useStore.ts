@@ -2,7 +2,13 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import emailjs from '@emailjs/browser'
 
-type User = { id: string; name: string; email: string; avatar: string; color: string }
+type User = {
+  id: string
+  name: string
+  email: string
+  avatar: string
+  color: string
+}
 
 const sampleUsers: User[] = [
   { id: 'sai', name: 'Sai', email: 'saiprasadind@gmail.com', avatar: '🧿', color: '#22d3ee' },
@@ -23,65 +29,92 @@ export const useStore = create(
       users: sampleUsers,
       currentUserId: 'sai',
       watchlists: { sai: ['AAPL', 'TSLA', 'RELIANCE.NS'], raghav: ['NVDA'], priya: ['GOLD'] },
-      alerts: [],
+      alerts: [] as { symbol: string; threshold: number; direction: 'above' | 'below' }[],
       selectedStock: null as Stock | null,
       activeView: 'dashboard' as 'dashboard' | 'watchlist' | 'alerts' | 'settings',
       prices: {} as Record<string, Stock>,
-      theme: 'cyan' as 'cyan' | 'violet' | 'muted',
 
       currentUser: () => get().users.find(u => u.id === get().currentUserId)!,
 
       switchUser: (id: string) => set({ currentUserId: id, selectedStock: null }),
 
       setView: (view: string) => set({ activeView: view }),
-setSelectedStock: (stock: Stock | null) => set({ selectedStock: stock }),
+
+      setSelectedStock: (stock: Stock | null) => set({ selectedStock: stock }),
+
       addToWatchlist: (symbol: string) => {
         const uid = get().currentUserId
+        const upper = symbol.toUpperCase()
+        if (!get().watchlists[uid]?.includes(upper)) {
+          set(state => ({
+            watchlists: {
+              ...state.watchlists,
+              [uid]: [...(state.watchlists[uid] || []), upper]
+            }
+          }))
+        }
+      },
+
+      removeFromWatchlist: (symbol: string) => {
+        const uid = get().currentUserId
         set(state => ({
-          watchlists: { ...state.watchlists, [uid]: [...(state.watchlists[uid] || []), symbol] }
+          watchlists: {
+            ...state.watchlists,
+            [uid]: (state.watchlists[uid] || []).filter(s => s !== symbol.toUpperCase())
+          }
         }))
       },
 
       refreshPrices: async () => {
-        // Finnhub placeholder — replace YOUR_KEY
-        const symbols = ['AAPL', 'TSLA', 'RELIANCE.NS', 'NVDA', '^NSEI', '^BSESN', '^DJI', '^IXIC', 'GC=F', 'SI=F', 'BINANCE:BTCUSDT', 'BINANCE:ETHUSDT']
-        const newPrices: any = {}
+        const symbols = ['AAPL', 'TSLA', 'RELIANCE.NS', '^NSEI', '^DJI', 'GC=F', 'BINANCE:BTCUSDT']
+        const newPrices: Record<string, Stock> = { ...get().prices }
 
         for (const sym of symbols) {
           try {
-            const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${sym}&token=YOUR_FINNHUB_KEY`)
+            const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${sym}&token=YOUR_FINNHUB_KEY_HERE`)
             const data = await res.json()
-            newPrices[sym] = {
-              symbol: sym,
-              price: data.c || 150,
-              change: data.dp || (Math.random() * 4 - 2),
-              spark: Array.from({ length: 20 }, () => Math.random() * 200 + 100)
+            if (data.c) {
+              newPrices[sym] = {
+                symbol: sym,
+                price: data.c,
+                change: data.dp || 0,
+                spark: Array.from({ length: 20 }, () => Math.random() * 200 + data.c * 0.9)
+              }
             }
-          } catch {
-            // fallback mock
-            newPrices[sym] = { symbol: sym, price: 150 + Math.random() * 50, change: Math.random() * 6 - 3, spark: [] }
+          } catch (err) {
+            console.warn(`Finnhub fetch failed for ${sym}:`, err)
           }
         }
+
         set({ prices: newPrices })
       },
 
-     sendAlertEmail: async (symbol: string, message: string) => {
-  try {
-    await emailjs.send(
-      import.meta.env.VITE_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      {
-        to_email: currentUser().email,
-        symbol,
-        message
-      },
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-    );
-  } catch (err) {
-    console.error('EmailJS failed:', err);
-  }
-}
+      sendAlertEmail: async (symbol: string, message: string) => {
+        const user = get().currentUser()
+        if (!user.email) {
+          console.warn('No email set for user')
+          return
+        }
+
+        try {
+          await emailjs.send(
+            'YOUR_EMAILJS_SERVICE_ID',
+            'YOUR_EMAILJS_TEMPLATE_ID',
+            {
+              to_email: user.email,
+              symbol,
+              message
+            },
+            'YOUR_EMAILJS_PUBLIC_KEY'
+          )
+          console.log('Email sent successfully')
+        } catch (err) {
+          console.error('EmailJS send failed:', err)
+        }
+      }
     }),
-    { name: 'orbitx-storage' }
+    {
+      name: 'orbitx-storage-v1'
+    }
   )
 )
