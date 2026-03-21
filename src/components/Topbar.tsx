@@ -1,29 +1,15 @@
-// Remove the named import line entirely
-// import { Mic, RefreshCw, Globe } from 'lucide-react';  ← DELETE THIS
+import { motion } from 'framer-motion'
+import { Mic, RefreshCw, Globe } from 'lucide-react/icons' // or your working import style
+import { useStore } from '../stores/useStore'
+import { useState } from 'react'
 
-// Keep/add these individual ones (adjust if you have more icons)
-import Mic from 'lucide-react/icons/mic';
-import RefreshCw from 'lucide-react/icons/refresh-cw';
-import Globe from 'lucide-react/icons/globe';
-// ... use them as <Mic />, <RefreshCw />, <Globe /> (no change)
-
-// Then use them as <Home />, <List />, etc. (same as before)
-
-// In Topbar.tsx
-const [listening, setListening] = useState(false);
-
-// In the mic button onClick:
-onClick={() => setListening(!listening)}
-
-// Then pass listening to VoiceListener as prop
-<VoiceListener listening={listening} />
-  
 interface TopbarProps {
   onAskAI: () => void
 }
 
 export default function Topbar({ onAskAI }: TopbarProps) {
   const { currentUser, refreshPrices } = useStore()
+  const [listening, setListening] = useState(false)
 
   return (
     <motion.header
@@ -31,7 +17,6 @@ export default function Topbar({ onAskAI }: TopbarProps) {
       animate={{ y: 0 }}
       className="h-20 bg-black/40 backdrop-blur-xl border-b border-white/10 px-8 flex items-center justify-between sticky top-0 z-40"
     >
-      {/* Left - Logo / Voice / Refresh */}
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-3">
           <div className="text-3xl">🛰️</div>
@@ -41,10 +26,12 @@ export default function Topbar({ onAskAI }: TopbarProps) {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="p-3 rounded-full bg-white/5 hover:bg-white/10 transition"
-          onClick={() => {/* toggle voice listening - handled in VoiceListener */}}
+          className={`p-3 rounded-full transition ${
+            listening ? 'bg-red-500/30' : 'bg-white/5 hover:bg-white/10'
+          }`}
+          onClick={() => setListening(!listening)}
         >
-          <Mic size={20} className="text-cyan-400" />
+          <Mic size={20} className={listening ? 'text-red-400' : 'text-cyan-400'} />
         </motion.button>
 
         <motion.button
@@ -57,7 +44,6 @@ export default function Topbar({ onAskAI }: TopbarProps) {
         </motion.button>
       </div>
 
-      {/* Right - User + Country + AI ask hint */}
       <div className="flex items-center gap-6">
         <button
           onClick={onAskAI}
@@ -72,12 +58,15 @@ export default function Topbar({ onAskAI }: TopbarProps) {
           </div>
           <div>
             <p className="font-medium">{currentUser().name}</p>
-            <p className="text-xs text-gray-500">Admin</p>
+            <p className="text-xs text-gray-400">Admin</p>
           </div>
         </div>
 
         <Globe size={20} className="text-gray-400" />
       </div>
+
+      {/* Pass listening state to VoiceListener */}
+      <VoiceListener listening={listening} />
     </motion.header>
   )
 }
