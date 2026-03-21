@@ -1,7 +1,6 @@
-
 import { motion } from 'framer-motion'
 import { useStore } from '../stores/useStore'
-import { TrendingUp, TrendingDown } from 'lucide-react'
+import { TrendingUp, TrendingDown } from 'lucide-react/icons'   // or your working import style
 
 const tabItems = [
   'Top 10 Revenue',
@@ -23,15 +22,15 @@ export default function Dashboard() {
     { name: 'BTC', key: 'BINANCE:BTCUSDT' },
     { name: 'ETH', key: 'BINANCE:ETHUSDT' },
   ]
-onClick={() => useStore.getState().setSelectedStock(prices[idx.key])}
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="space-y-10 pt-16" // pt-16 to clear fixed marquee + topbar
+      className="space-y-10 pt-16"
     >
-      {/* Hero Indices Row */}
+      {/* Hero Indices Row – now clickable! */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
         {majorIndices.map(idx => {
           const data = prices[idx.key]
@@ -43,7 +42,7 @@ onClick={() => useStore.getState().setSelectedStock(prices[idx.key])}
               key={idx.key}
               whileHover={{ scale: 1.04, y: -4 }}
               className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-4 cursor-pointer"
-              onClick={() => {/* Later: open StockPanel with this symbol */}}
+              onClick={() => useStore.getState().setSelectedStock(data)}   // ← fixed here
             >
               <p className="text-sm text-gray-400">{idx.name}</p>
               <p className="text-2xl font-bold mt-1">
@@ -70,7 +69,7 @@ onClick={() => useStore.getState().setSelectedStock(prices[idx.key])}
         ))}
       </div>
 
-      {/* User's Watchlist Card (simple for now) */}
+      {/* User's Watchlist Card */}
       <div className="bg-gradient-to-br from-cyan-950/30 to-purple-950/30 border border-cyan-500/20 rounded-3xl p-6">
         <h2 className="text-xl font-semibold mb-4">{currentUser().name}'s Watchlist Pulse</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -85,28 +84,20 @@ onClick={() => useStore.getState().setSelectedStock(prices[idx.key])}
                 ${prices[sym]?.price?.toFixed(2) || '—'}
                 <span className="text-sm ml-2 text-gray-400">({prices[sym]?.change?.toFixed(2) || '—'}%)</span>
               </p>
-              <button
-                onClick={() => addToWatchlist(sym)} // dummy, already in list
-                className="mt-3 text-xs text-cyan-400 hover:underline"
-              >
-                Quick View
-              </button>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Placeholder for activity feed */}
-      {/* Placeholder for activity feed */}
-<div className="bg-white/5 rounded-3xl p-6">
-  <h3 className="text-lg font-medium mb-4">Recent Activity</h3>
-  <ul className="space-y-3 text-sm text-gray-300">
-    <li>• TSLA dipped 3.2% — added note: "Waiting for earnings"</li>
-    <li>• AAPL +1.8% — alert triggered for {' > '} $220</li>
-    <li>• Priya added NVDA to watchlist</li>
-  </ul>
-</div>
-     
+      {/* Recent Activity */}
+      <div className="bg-white/5 rounded-3xl p-6">
+        <h3 className="text-lg font-medium mb-4">Recent Activity</h3>
+        <ul className="space-y-3 text-sm text-gray-300">
+          <li>• TSLA dipped 3.2% — added note: "Waiting for earnings"</li>
+          <li>• AAPL +1.8% — alert triggered for {' > '} $220</li>
+          <li>• Priya added NVDA to watchlist</li>
+        </ul>
+      </div>
     </motion.div>
   )
 }
