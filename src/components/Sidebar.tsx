@@ -1,18 +1,12 @@
-// DELETE these lines (if present):
-// import Home from 'lucide-react/icons/home';
-// import List from 'lucide-react/icons/list';
-// import Bell from 'lucide-react/icons/bell';
-// import Settings from 'lucide-react/icons/settings';
-// import Globe from 'lucide-react/icons/globe';
-
-// ADD / REPLACE with this single line:
-import { Home, List, Bell, Settings, Globe } from 'lucide-react';
+import { motion } from 'framer-motion'
+import { useStore } from '../stores/useStore'
+import { Home, List, Bell, Settings } from 'lucide-react'
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: Home },
   { id: 'watchlist', label: 'Watchlist', icon: List },
   { id: 'alerts', label: 'Alerts', icon: Bell },
-  { id: 'settings', label: 'Settings', icon: SettingsIcon },
+  { id: 'settings', label: 'Settings', icon: Settings },
 ]
 
 export default function Sidebar() {
@@ -51,7 +45,6 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* Country toggle + User switch (admin only) */}
       <div className="mt-auto space-y-4">
         <div className="flex items-center justify-between px-4 py-3 bg-white/5 rounded-2xl">
           <span className="text-sm text-gray-400">Market</span>
