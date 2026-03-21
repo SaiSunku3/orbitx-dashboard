@@ -44,7 +44,7 @@ export const useStore = create(
 
       refreshPrices: async () => {
         // Finnhub placeholder — replace YOUR_KEY
-        const symbols = ['AAPL', 'TSLA', 'RELIANCE.NS', 'NVDA', '^NSEI', 'GC=F']
+        const symbols = ['AAPL', 'TSLA', 'RELIANCE.NS', 'NVDA', '^NSEI', '^BSESN', '^DJI', '^IXIC', 'GC=F', 'SI=F', 'BINANCE:BTCUSDT', 'BINANCE:ETHUSDT']
         const newPrices: any = {}
 
         for (const sym of symbols) {
